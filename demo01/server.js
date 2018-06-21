@@ -23,7 +23,7 @@ var schema = buildSchema(`
   }
 `);
 
-// hardcoded data
+// some hardcoded data
 var users = [
   {name: "John",age: 25},
   {name: "Mary",age: 18}
