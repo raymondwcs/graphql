@@ -1,0 +1,3 @@
+{
+    "query": "query {invoiceAmtHKD(invoiceNo: \"00001\") {amount}}"
+}
