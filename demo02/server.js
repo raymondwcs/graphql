@@ -18,7 +18,7 @@ var quotes={};
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    invoiceAmtHKD(invoiceNo: String!): invoiceAmt
+    invoiceAmtUSD(invoiceNo: String!): invoiceAmt
   },
 
   type invoiceAmt {
@@ -35,7 +35,7 @@ var invoices = [
 
 // The root provides a resolver function for each API endpoint
 var root = {
-  invoiceAmtHKD: function (args) {
+  invoiceAmtUSD: function (args) {
     var amt = 0;
     var currency = "USD";
     for (var i=0; i<invoices.length; i++) {
