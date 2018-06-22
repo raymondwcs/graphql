@@ -14,13 +14,6 @@ var { buildSchema } = require('graphql');
 
 var APIKEY="";       //**your API key***
 
-var options = {
-    host: 'apilayer.net',
-    port: 80,
-    path: '/api/live?access_key=' + APIKEY + '&currencies=USD,JPY&source=HKD',
-    method: 'GET'
-};
-
 var quotes={};
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
@@ -41,7 +34,6 @@ var invoices = [
 ];
 
 // The root provides a resolver function for each API endpoint
-
 var root = {
   invoiceAmtHKD: function (args) {
     var amt = 0;
@@ -56,6 +48,7 @@ var root = {
     var response = request('GET',path);
     //console.log(JSON.parse(response.getBody()));
     var rate = JSON.parse(response.getBody()).quotes['USD'+currency];
+    // perpare response data
     var invoiceAmt = {};
     invoiceAmt['invoiceNo'] = args.invoiceNo;
     invoiceAmt['amount'] = amt * rate;
