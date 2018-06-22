@@ -37,21 +37,28 @@ var invoices = [
 var root = {
   invoiceAmtUSD: function (args) {
     var amt = 0;
-    var currency = "USD";
-    for (var i=0; i<invoices.length; i++) {
-      if (invoices[i].invoiceNo === args.invoiceNo) {
-        amt = invoices[i].amt;
-        currency = invoices[i].currency;
-      }
-    }
-    var path = 'http://apilayer.net/api/live?access_key=' + APIKEY + '&currencies=' + currency + '&source=USD';
-    var response = request('GET',path);
-    //console.log(JSON.parse(response.getBody()));
-    var rate = JSON.parse(response.getBody()).quotes['USD'+currency];
-    // perpare response data
+    var currency = "";
     var invoiceAmt = {};
-    invoiceAmt['invoiceNo'] = args.invoiceNo;
-    invoiceAmt['amount'] = amt * rate;
+    invoiceAmt['invoiceNo'] = "Not Found!";
+    invoiceAmt['amount'] = -1;
+
+    var picked = invoices.find(function(invoice) {
+      if (invoice.invoiceNo === args.invoiceNo)
+        return(invoice);
+    });
+    if (picked) {
+      amt = picked.amt;
+      currency = picked.currency;
+      var path = 'http://apilayer.net/api/live?access_key=' + APIKEY + 
+                 '&currencies=' + currency + '&source=USD';
+      var response = request('GET',path);
+      //console.log(JSON.parse(response.getBody()));
+      var rate = JSON.parse(response.getBody()).quotes['USD'+currency];
+      // perpare response data
+      invoiceAmt['invoiceNo'] = args.invoiceNo;
+      invoiceAmt['amount'] = amt * rate;
+    } 
+    
     return(invoiceAmt); 
   }
 };
