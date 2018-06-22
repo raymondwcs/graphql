@@ -7,11 +7,21 @@ In body.json:
     "query": "query {invoiceAmtHKD(invoiceNo: \"00001\") {amount}}"
 }
 */
-
+var request = require('sync-request');
 var express = require('express');
 var express_graphql = require('express-graphql');
 var { buildSchema } = require('graphql');
 
+var APIKEY="";       //**your API key***
+
+var options = {
+    host: 'apilayer.net',
+    port: 80,
+    path: '/api/live?access_key=' + APIKEY + '&currencies=USD,JPY&source=HKD',
+    method: 'GET'
+};
+
+var quotes={};
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
@@ -20,13 +30,13 @@ var schema = buildSchema(`
 
   type invoiceAmt {
     invoiceNo: String!
-    amount: Int!
+    amount: Float!
   },
 `);
 
 // some hardcoded data
 var invoices = [
-  {invoiceNo: "00001", amt: 70,   currency: "USD"},
+  {invoiceNo: "00001", amt: 70,   currency: "HKD"},
   {invoiceNo: "00002", amt: 1800, currency: "JPY"},
 ];
 
@@ -34,10 +44,22 @@ var invoices = [
 
 var root = {
   invoiceAmtHKD: function (args) {
+    var amt = 0;
+    var currency = "USD";
+    for (var i=0; i<invoices.length; i++) {
+      if (invoices[i].invoiceNo === args.invoiceNo) {
+        amt = invoices[i].amt;
+        currency = invoices[i].currency;
+      }
+    }
+    var path = 'http://apilayer.net/api/live?access_key=' + APIKEY + '&currencies=' + currency + '&source=USD';
+    var response = request('GET',path);
+    //console.log(JSON.parse(response.getBody()));
+    var rate = JSON.parse(response.getBody()).quotes['USD'+currency];
     var invoiceAmt = {};
-    invoiceAmt['invoiceNo'] = "xxxxx";
-    invoiceAmt['amount'] = 0;
-    return(invoiceAmt);
+    invoiceAmt['invoiceNo'] = args.invoiceNo;
+    invoiceAmt['amount'] = amt * rate;
+    return(invoiceAmt); 
   }
 };
 

@@ -2,6 +2,7 @@
     "name": "express-graphql",
     "dependencies": {
         "express": "^4.16.3",
+        "sync-request": "*",
         "express-graphql": "*",
         "graphql": "*"
     },
