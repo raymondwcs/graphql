@@ -31,13 +31,7 @@ var invoices = [
 ];
 
 // The root provides a resolver function for each API endpoint
-/*
-var root = {
-  allPersons: () => {
-    return users;
-  },
-};
-*/
+
 var root = {
   invoiceAmtHKD: function (args) {
     var invoiceAmt = {};
@@ -46,8 +40,6 @@ var root = {
     return(invoiceAmt);
   }
 };
-
-
 
 // Create an express server and a GraphQL endpoint
 var app = express();
