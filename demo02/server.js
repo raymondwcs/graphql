@@ -36,9 +36,7 @@ var invoices = [
 // The root provides a resolver function for each API endpoint
 var root = {
   invoiceAmtUSD: function (args) {
-    var amt = 0;
-    var currency = "";
-    var invoiceAmt = {};
+    var amt = 0, currency = "", invoiceAmt = {};
     invoiceAmt['invoiceNo'] = "Not Found!";
     invoiceAmt['amount'] = -1;
 
@@ -46,6 +44,7 @@ var root = {
       if (invoice.invoiceNo === args.invoiceNo)
         return(invoice);
     });
+    
     if (picked) {
       amt = picked.amt;
       currency = picked.currency;
