@@ -1,3 +1,0 @@
-{
-    "query": "query {invoiceAmtUSD(invoiceNo: \"00001\") {amount}}"
-}

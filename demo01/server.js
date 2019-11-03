@@ -2,42 +2,39 @@
 curl -X POST -H "Content-Type: application/json" --data '{ "query": "{allPersons {name}}"}' http://localhost:4000/graphql
 */
 
-var express = require('express');
-var express_graphql = require('express-graphql');
-var { buildSchema } = require('graphql');
+const express = require('express');
+const express_graphql = require('express-graphql');
+const { buildSchema } = require('graphql');
+
+// some hardcoded data
+const users = [
+  {id: "001", name: "John", gender: "m", age: 25},
+  {id: "002", name: "Mary", gender: "f", age: 18}
+];
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+const schema = buildSchema(`
   type Query {
     allPersons: [Person]
   },
 
   type Person {
+    id: String!
     name: String!
+    gender: String!
     age: Int!
   },
-
-  type Post {
-    title: String!
-    author: Person!
-  }
 `);
 
-// some hardcoded data
-var users = [
-  {name: "John",age: 25},
-  {name: "Mary",age: 18}
-];
-
 // The root provides a resolver function for each API endpoint
-var root = {
+const root = {
   allPersons: () => {
     return users;
   },
 };
 
 // Create an express server and a GraphQL endpoint
-var app = express();
+const app = express();
 app.use('/graphql', express_graphql({
     schema: schema,
     rootValue: root,
