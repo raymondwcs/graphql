@@ -31,6 +31,13 @@ const root = {
   allPersons: () => {
     return users;
   },
+  
+  getPerson: (args) => {
+    let userID = args.id;
+    return users.filter(user => {
+      return user.id == userID;
+    })[0];
+  }
 };
 
 // Create an express server and a GraphQL endpoint

@@ -1,5 +1,5 @@
 /*
-curl -X POST -H "Content-Type: application/json" --data '{ "query": "{allPersons {name}}"}' http://localhost:4000/graphql
+curl -X POST -H "Content-Type: application/json" --data '{ "query": "{users {name}}"}' http://localhost:4000/graphql
 */
 
 const express = require('express');
@@ -15,10 +15,10 @@ const users = [
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    allPersons: [Person]
+    users: [User]
   },
 
-  type Person {
+  type User {
     id: String!
     name: String!
     gender: String!
@@ -28,7 +28,7 @@ const schema = buildSchema(`
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  allPersons: () => {
+  users: () => {
     return users;
   },
 };
