@@ -1,24 +1,43 @@
-var express = require('express');
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+/*
+curl -X POST -H "Content-Type: application/json" --data '{ "query": "{allPersons {name}}"}' http://localhost:4000/graphql
+*/
 
-// Initialize a GraphQL schema
-var schema = buildSchema(`
+const express = require('express');
+const express_graphql = require('express-graphql');
+const { buildSchema } = require('graphql');
+
+// some hardcoded data
+const users = [
+  {id: "001", name: "John", gender: "m", age: 25},
+  {id: "002", name: "Mary", gender: "f", age: 18}
+];
+
+// Construct a schema, using GraphQL schema language
+const schema = buildSchema(`
   type Query {
-    hello: String
-  }
+    allPersons: [Person]
+  },
+
+  type Person {
+    id: String!
+    name: String!
+    gender: String!
+    age: Int!
+  },
 `);
 
-// Root resolver
-var root = { 
-  hello: () => 'Hello world!'
+// The root provides a resolver function for each API endpoint
+const root = {
+  allPersons: () => {
+    return users;
+  },
 };
 
 // Create an express server and a GraphQL endpoint
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,  // Must be provided
-  rootValue: root,
-  graphiql: true,  // Enable GraphiQL when server endpoint is accessed in browser
+const app = express();
+app.use('/graphql', express_graphql({
+    schema: schema,
+    rootValue: root,
+    graphiql: true
 }));
-app.listen(4000, () => console.log('Now browse to localhost:4000/graphql'));
+app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
