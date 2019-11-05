@@ -16,6 +16,7 @@ const users = [
 const schema = buildSchema(`
   type Query {
     users: [User]
+    usersover21: [User]
     user(id: String!): User
   },
 
@@ -32,16 +33,17 @@ const root = {
     return users;
   },
   
-  /* 
-  {user(id:"001") {
-    id,name,age
-  }}
-  */
   user: (args) => {
     let userID = args.id;
     return users.filter(user => {
       return user.id == userID;
     })[0];
+  },
+
+  usersover21: () => {
+    return users.filter(user => {
+      return user.age > 21;
+    });
   }
 };
 
