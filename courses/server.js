@@ -38,7 +38,8 @@ const coursesData = [
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    courses: [Course]
+    courses: [Course],
+    course(id: Int!): Course
   },
 
   type Course {
@@ -56,6 +57,12 @@ const root = {
   courses: () => {
     return coursesData;
   },
+  course: (args) => {
+    let id = args.id;
+    return coursesData.filter(course => {
+      return course.id == id;
+    })[0];
+  }
 };
 
 // Create an express server and a GraphQL endpoint
