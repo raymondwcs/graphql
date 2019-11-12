@@ -1,5 +1,5 @@
 # GraphQL
-This example demonstrates the basic concepts of [`GraphQL`]{https://graphql.org}.
+This example demonstrates the basic concepts of [`GraphQL`](https://graphql.org).
 
 Two `schemas` are defined for two resources (`Post`and `Person`) and their relationship (one-to-many):
 1. `Post`
