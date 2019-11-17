@@ -24,13 +24,13 @@ npm start
 ### Testing
 1. Get ids of jane's friends
 ```
-curl -v -X GET http://localhost:8099/users/jane/friends
+curl -v -X GET http://localhost:4000/users/jane/friends
 ```
 2. Get jane's details
 ```
-curl -v -X GET http://localhost:8099/friends/1
+curl -v -X GET http://localhost:4000/friends/1
 ```
 3. Get details of location 1
 ```
-curl -v -X GET http://localhost:8099/location/1
+curl -v -X GET http://localhost:4000/location/1
 ```
