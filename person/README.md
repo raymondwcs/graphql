@@ -1,5 +1,13 @@
-# POST requests
-This example demonstrates the use of `body-parser` middleware to extract POST request parameters.
+# GraphQL
+This example demonstrates the basic concepts of [`GraphQL`](https://graphql.org).
+
+Two `schemas` are defined for two resources (`Post`and `Person`) and their relationship (one-to-many):
+1. `Post`
+2. `Person`
+
+Two `queries` are defined:
+1. `persons` - returns all persons in `persons` array
+2. `allPersons(last)` - returns the `last` number of persons in `persons` array
 
 ## Getting Started
 
@@ -12,14 +20,17 @@ npm install
 npm start
 ```
 ### Testing
-1. Send post request using `form.html`
-2. Send post request using one the following `curl` commands:
+1. Get names of all persons
 ```
-curl --header "Content-Type: application/json" \
---request POST \
---data '{"name":"coco","age":10}' localhost:8099
+curl -X POST -H "Content-Type: application/json" --data '{ "query": "{persons {name}}"}' http://localhost:4000/graphql
+
 ```
-or
+2. Get names. ages and post titles of all persons
 ```
-curl -v -X POST --data "name=coco&age=10" localhost:8099
+curl -X POST -H "Content-Type: application/json" --data '{ "query": "{persons {name age posts {title}}}"}' http://localhost:4000/graphql
+
+```
+3. Get names of last two persons
+```
+curl -X POST -H "Content-Type: application/json" --data '{ "query": "{allPersons(last:2) {name}}"}' http://localhost:4000/graphql
 ```
