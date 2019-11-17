@@ -40,8 +40,15 @@ const root = {
     // find user's friends
     targetUser[0].friends.forEach(fid => {
       users.forEach(u => {
-        if (u.id == fid) friendsOfTargetUser.push(u);
-      })   
+        if (u.id == fid) {
+          locations.forEach(loc => {
+            if (loc.id == u.location) {
+              u.location = loc.name;
+            }
+          })
+          friendsOfTargetUser.push(u);
+        }
+      });
     });
     return(friendsOfTargetUser);
    }
