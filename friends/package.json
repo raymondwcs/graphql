@@ -1,0 +1,14 @@
+{
+    "name": "express",
+    "dependencies": {
+        "express": "^4.16.3",
+        "express-graphql": "*",
+        "graphql": "*"
+    },
+    "version": "1.0.0",
+    "description": "A demo GraphQL server",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "Raymond SO"
+}
