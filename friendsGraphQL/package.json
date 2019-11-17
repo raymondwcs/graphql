@@ -3,8 +3,7 @@
     "dependencies": {
         "express": "^4.16.3",
         "express-graphql": "*",
-        "graphql": "*",
-        "nodemon": "^1.19.4"
+        "graphql": "*"
     },
     "version": "1.0.0",
     "description": "A demo GraphQL server",
