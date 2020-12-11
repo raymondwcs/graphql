@@ -3,7 +3,7 @@ curl -X POST -H "Content-Type: application/json" --data '{ "query": "{persons {n
 */
 
 const express = require('express');
-const express_graphql = require('express-graphql');
+const express_graphql = require('express-graphql').graphqlHTTP;
 const { buildSchema } = require('graphql');
 
 // some hardcoded data

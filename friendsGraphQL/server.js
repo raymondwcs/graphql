@@ -1,5 +1,5 @@
 const express = require('express');
-const express_graphql = require('express-graphql');
+const express_graphql = require('express-graphql').graphqlHTTP;
 const { buildSchema } = require('graphql');
 
 // REST resource: users
